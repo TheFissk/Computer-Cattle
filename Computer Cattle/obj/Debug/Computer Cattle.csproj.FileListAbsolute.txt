@@ -1,3 +1,12 @@
 c:\users\timothy fiss\documents\visual studio 2015\Projects\Computer Cattle\Computer Cattle\bin\Debug\Computer Cattle.exe.config
 C:\Users\Timothy Fiss\Source\Repos\Computer-Cattle\Computer Cattle\Computer Cattle\bin\Debug\Computer Cattle.exe.config
 C:\Users\Timothy Fiss\Source\Repos\Computer-Cattle\Computer Cattle\bin\Debug\Computer Cattle.exe.config
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\bin\Debug\Computer Cattle.exe.config
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\bin\Debug\Computer Cattle.exe
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\bin\Debug\Computer Cattle.pdb
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\obj\Debug\Computer Cattle.csprojResolveAssemblyReference.cache
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\obj\Debug\Computer_Cattle.Form1.resources
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\obj\Debug\Computer_Cattle.Properties.Resources.resources
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\obj\Debug\Computer Cattle.csproj.GenerateResource.Cache
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\obj\Debug\Computer Cattle.exe
+C:\Users\thefi\Source\Repos\Computer-Cattle\Computer Cattle\obj\Debug\Computer Cattle.pdb

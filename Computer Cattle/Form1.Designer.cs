@@ -33,12 +33,14 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(148, 185);
+            this.button1.Location = new System.Drawing.Point(93, 134);
             this.button1.Name = "button1";
+            this.button1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.button1.Size = new System.Drawing.Size(74, 40);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "Breed";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
