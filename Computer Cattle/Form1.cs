@@ -31,7 +31,6 @@ namespace Computer_Cattle
             Sire.GenerateNewRandomAnimal("Male");
             Dam.GenerateNewRandomAnimal("Female");
             Calf.BreedNewAnimal(Sire, Dam);
-
         }
 
         public int[] Summarize (Animal animal)
@@ -71,10 +70,11 @@ namespace Computer_Cattle
             public EnvironmentInfo envInfo;
             public int animalNumber;
 
+
+            //may still need to create the genotype and the phenotype data, as well as the EnvironementInfo
             public void GenerateNewRandomAnimal(string gender)
             {
-                rand = new Random(); //it would be nice not to have this
-                this.genetics = new Gene[300];
+                this.InitializeAnimal();
 
                 this.genetics[0] = new Gene();
                 this.genetics[0].dam = 2;
@@ -90,15 +90,19 @@ namespace Computer_Cattle
             //Creates a new animal from 2 existing animals (a sire and a dam)
             public void BreedNewAnimal(Animal sire, Animal dam)
             {
-                rand = new Random();
-                this.genetics = new Gene[300];
-                bool sireSide, damSide;
+                //checks to make sure this is valid breeding
                 if (sire.genetics[0].sire != 1)
                 {
                     Console.WriteLine(sire.animalNumber + " is not male, breeding failed horribly");
                     return;
                 }
 
+                this.InitializeAnimal();
+                bool sireSide, damSide;
+
+                this.pedigree.SetPedigree(this.animalNumber, sire.pedigree, dam.pedigree);
+
+                //Creates the genetics of the Animal
                 //each animal has 30 chromosomes, 10 genes per chromosome
                 for (int chromosome = 0; chromosome < 30; chromosome++)
                 {
@@ -109,7 +113,7 @@ namespace Computer_Cattle
                     for (int currentGene = 0; currentGene < 10; currentGene++)
                     {
                         //Do we switch sides?
-                        if (rand.Next(1,11).Equals(10))
+                        if (rand.Next(1, 11).Equals(10))
                         {
                             sireSide = sireSide ? false : true;
                         }
@@ -122,6 +126,18 @@ namespace Computer_Cattle
                         this.genetics[chromosome * 10 + currentGene].dam = damSide ? (dam.genetics[chromosome * 10 + currentGene].sire) : (dam.genetics[chromosome * 10 + currentGene].dam);
                     }
                 }
+            }
+
+
+
+            private void InitializeAnimal ()
+            {
+                this.genetics = new Gene[300];
+                this.pedigree = new AnimalPedigree();
+                this.phenotype = new Phenotype();
+                this.genotype = new Genotype();
+                this.envInfo = new EnvironmentInfo();
+                this.rand = new Random();
             }
 
             public void CreatePhenotype()
@@ -141,12 +157,19 @@ namespace Computer_Cattle
         //Does this need to store the Animals numbers?
         public class AnimalPedigree
         {
+            public int animalNumber;
             public bool generationOne = true;
             public AnimalPedigree sire;
             public AnimalPedigree dam;
 
-            public void setPedigree(AnimalPedigree _sire, AnimalPedigree _dam)
+            public void SetPedigree (int _animalNumber)
             {
+                animalNumber = _animalNumber;
+            }
+
+            public void SetPedigree (int _animalNumber, AnimalPedigree _sire, AnimalPedigree _dam)
+            {
+                animalNumber = _animalNumber;
                 sire = _sire;
                 dam = _dam;
             }
