@@ -12,17 +12,22 @@ namespace Computer_Cattle
 {
     public partial class Form1 : Form
     {
-        public Random rand;
+        public static Random rand;
+        DataTable table;
+        BindingSource table1;
 
         public Form1()
         {
             InitializeComponent();
+            rand = new Random();
+            table = new DataTable();
+            table1 = new BindingSource();
+            table1.Add(table);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Animal Sire, Dam, Calf;
-            int[] sireArr, damArr, calfArr;
 
             Sire = new Animal();            
             Dam = new Animal();
@@ -31,34 +36,27 @@ namespace Computer_Cattle
             Sire.GenerateNewRandomAnimal("Male");
             Dam.GenerateNewRandomAnimal("Female");
             Calf.BreedNewAnimal(Sire, Dam);
+
+            table.Columns.Add("Gender", typeof(int));
+            table.Columns.Add("Gene 15, 1", typeof(int));
+            table.Columns.Add("Gene 15, 2", typeof(int));
+            table.Columns.Add("Gene 82, 1", typeof(int));
+            table.Columns.Add("Gene 82, 2", typeof(int));
+            table.Columns.Add("Gene 217, 1", typeof(int));
+            table.Columns.Add("Gene 217, 2", typeof(int));
+
+            table.Rows.Add(Sire.genetics[0].sire, Sire.genetics[15].sire, Sire.genetics[15].dam, Sire.genetics[82].sire, Sire.genetics[82].dam, Sire.genetics[217].sire, Sire.genetics[217].dam);
+            table.Rows.Add(Dam.genetics[0].sire, Dam.genetics[15].sire, Dam.genetics[15].dam, Dam.genetics[82].sire, Dam.genetics[82].dam, Dam.genetics[217].sire, Dam.genetics[217].dam);
+            table.Rows.Add(Calf.genetics[0].sire, Calf.genetics[15].sire, Calf.genetics[15].dam, Calf.genetics[82].sire, Calf.genetics[82].dam, Calf.genetics[217].sire, Calf.genetics[217].dam);
+
+            dataGridView1.DataSource = table;
         }
-
-        public int[] Summarize (Animal animal)
-        {
-            int[] summary;
-            summary = new int[6];
-            for (int i = 0; i < 6; i++)
-            {
-                summary[i] = 0;
-            }
-
-            for (int i = 0; i < 200; i++)
-            {
-                summary[animal.genetics[i].sire-1]++;
-                summary[animal.genetics[i].dam-1]++;
-            }
-
-            return summary;
-        }
-
-
 
         //All of the random Classes that we need
 
         public class Animal
         {
             //I'd rather do without this
-            Random rand;
 
             //Each animal has 300 genes
             public Gene[] genetics;
@@ -82,8 +80,9 @@ namespace Computer_Cattle
                 for (int i = 1; i < 300; i++)
                 {
                     this.genetics[i] = new Gene();
-                    this.genetics[i].setGene(rand.Next(1, 7), rand.Next(1, 7));
+                    this.genetics[i].setGene(Form1.rand.Next(1, 7), Form1.rand.Next(1, 7));
                 }
+
             }
 
 
@@ -107,17 +106,17 @@ namespace Computer_Cattle
                 for (int chromosome = 0; chromosome < 30; chromosome++)
                 {
                     //Decides which side on the chromosome to start on
-                    sireSide = rand.Next(1, 3).Equals(1);
-                    damSide = rand.Next(1, 3).Equals(1);
+                    sireSide = Form1.rand.Next(1, 3).Equals(1);
+                    damSide = Form1.rand.Next(1, 3).Equals(1);
                     //Mashes two genes together
                     for (int currentGene = 0; currentGene < 10; currentGene++)
                     {
                         //Do we switch sides?
-                        if (rand.Next(1, 11).Equals(10))
+                        if (Form1.rand.Next(1, 11).Equals(10))
                         {
                             sireSide = sireSide ? false : true;
                         }
-                        if (rand.Next(1, 11).Equals(10))
+                        if (Form1.rand.Next(1, 11).Equals(10))
                         {
                             damSide = damSide ? false : true;
                         }
@@ -137,7 +136,6 @@ namespace Computer_Cattle
                 this.phenotype = new Phenotype();
                 this.genotype = new Genotype();
                 this.envInfo = new EnvironmentInfo();
-                this.rand = new Random();
             }
 
             public void CreatePhenotype()
@@ -201,13 +199,18 @@ namespace Computer_Cattle
             //The behind the scences numbers
             public double fertility, birthweight, milk, preWeanGrowth, yearlingGrowth, feedEfficiency, dailyGain, fatThickness, finalWeight;
             //The publically available numbers that aren't above
-            public double sex, weaningWeight, inbreedingCoEfficient;
+            public double printedSex, printedWeaningWeight, printedFatThickness, printedDailyGain, printedFinalWeight, printedInbreedingCoEfficient;
+
+            public void GeneratePrintedValues ()
+            {
+
+            }
         }
 
         //The performance values without the environmental factors
         public class Genotype
         {
-            public double fertility, birthweight, milk, preWeanGrowth, yearlingGrowth, feedEfficiency, dailyGain, finalWeight;
+            public double fertility, birthweight, milk, preWeanGrowth, yearlingGrowth, feedEfficiency, dailyGain, fatThickness, finalWeight;
         }
 
         public class EnvironmentInfo
